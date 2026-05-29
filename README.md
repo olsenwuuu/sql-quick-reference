@@ -61,3 +61,22 @@ SELECT
     -- Converts empty strings to NULL, then COALESCE replaces that NULL with 'Unknown'
     COALESCE(NULLIF(city, ''), 'Unknown City') AS clean_city
 FROM users;
+```
+## 1. `NVL()` — Null Value Substitution
+
+### Purpose & Definition
+The `NVL()` function is a scalar function used to handle `NULL` values by replacing them with a predefined fallback value. If a database scans a column and encounters a blank, missing, or unknown value (`NULL`), `NVL()` acts as a safety net, letting you swap that `NULL` out for a static value like a `0`, an empty string, or a placeholder string. 
+
+### Syntax
+```sql
+NVL(expression_to_test, value_if_null)
+```
+---
+## 2. `LISTAGG()` — String Aggregation
+
+### Purpose & Definition
+The `LISTAGG()` function is a specialized aggregate function used to transform vertical dataset structures into a horizontal layout. It takes multiple rows of string or text attributes from a single column and collapses them into a single, combined string row per grouping bucket, separated by a custom delimiter of your choice (such as a comma, hyphen, or pipe).
+
+### Syntax
+```sql
+LISTAGG(measure_column, 'delimiter') WITHIN GROUP (ORDER BY sort_column)
