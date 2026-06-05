@@ -80,3 +80,25 @@ The `LISTAGG()` function is a specialized aggregate function used to transform v
 ### Syntax
 ```sql
 LISTAGG(measure_column, 'delimiter') WITHIN GROUP (ORDER BY sort_column)
+```
+---
+## Extracting Day of the Week (`strftime('%w', date_column)`)
+
+### Purpose & Definition
+* **Definition:** A built-in SQLite date-formatting function that extracts the specific day of the week from a valid date string and returns it as a numeric text value ranging from "0" (Sunday) through "6" (Saturday).
+* **Use Case:** Crucial for behavioral and product analytics whenever you need to aggregate user activity by day-of-the-week patterns instead of specific calendar dates. It allows you to isolate weekend spikes, calculate weekday vs. weekend averages, or track operational cycles.
+* **Example:**
+```sql
+-- Extracting the numeric weekday and naming it
+SELECT 
+    activity_date,
+    strftime('%w', activity_date) AS numeric_weekday,
+    CASE CAST(strftime('%w', activity_date) AS INT)
+        WHEN 0 THEN 'Sunday'
+        WHEN 1 THEN 'Monday'
+        WHEN 6 THEN 'Saturday'
+        ELSE 'Weekday'
+    END AS day_name
+FROM stg_streaming_activity
+LIMIT 5;
+```
